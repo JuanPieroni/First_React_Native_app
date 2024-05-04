@@ -1,2 +1,14 @@
-llegue hasta el file and folder structure minuto 39.08 
+hasta ahora llegue a la parte de appwrite, teniendo un problema con el "package " en el archivo app.json
 Link del video https://www.youtube.com/watch?v=ZBCUegTZF7M&t=3507s&ab_channel=JavaScriptMastery
+
+
+ ERROR  [AppwriteException: Network request failed]
+ ERROR  [AppwriteException: Network request failed]
+
+ deje en 1:54:00
+
+  empieza con backend y se me complico todo
+   el problema lo tengo en app.json y no puedo avanzar
+
+   envie comentario en youtube - esperando respuesta
+   

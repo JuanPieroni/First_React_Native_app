@@ -1,19 +1,47 @@
-import { View, Text, ScrollView, Image } from "react-native"
-import { React, useState } from "react"
+import { View, Text, ScrollView, Image, Alert } from "react-native"
+import React, { useState } from "react"
 import { SafeAreaView } from "react-native-safe-area-context"
 import { images } from "../../constants"
 import FormField from "../../components/FormField"
 import CustomButton from "../../components/CustomButton"
 import { Link } from "expo-router"
+import { createUser } from "../../lib/appwrite"
+import { router } from "expo-router"
 
 const SignUp = () => {
     const [form, setForm] = useState({
         username: "",
-        Username: "",
+        email: "",
         password: "",
     })
-    const [isSubmiting, setIsSubmiting] = useState(false)
-    const submit = () => {}
+    const [isSubmitting, setIsSubmitting] = useState(false)
+    const [user, setUser] = useState(null)
+    const [isLogged, setIsLogged] = useState(false)
+
+    const submit = async () => {
+        if (form.username === "" || form.email === "" || form.password === "") {
+            Alert.alert("Error", "Please fill in all fields")
+            return
+        }
+
+        setIsSubmitting(true)
+        try {
+            const result = await createUser(
+                form.email,
+                form.password,
+                form.username
+            )
+            setUser(result)
+            setIsLogged(true)
+
+            router.replace("/home")
+        } catch (error) {
+            Alert.alert("Error", error.message)
+        } finally {
+            setIsSubmitting(false)
+        }
+    }
+
     return (
         <>
             <SafeAreaView className="bg-primary h-full">
@@ -54,20 +82,20 @@ const SignUp = () => {
                             otherStyles="mt-7"
                         />
                         <CustomButton
-                            title="Sign In"
+                            title="Sign up"
                             handlePress={submit}
                             containerStyles="mt-7"
-                            isLoading={isSubmiting}
+                            isLoading={isSubmitting}
                         />
                         <View className="justify-center pt-5 flex-row gap-2">
                             <Text className="text-lg text-gray-100 font-pregular">
-                                Don't Have an account?
+                                Have an account already?
                             </Text>
                             <Link
-                                href="/sign-up"
+                                href="/sign-in"
                                 className="text-lg font-psemibold text-secondary"
                             >
-                                Sign Up
+                                Sign In
                             </Link>
                         </View>
                     </View>
